@@ -8,6 +8,16 @@ Quickstart
 - Dev: `npm run dev` then open the printed URL.
 - Build: `npm run build` and `npm run preview`.
 
+Deploy to GitHub Pages
+- Push this repo to GitHub (default branch `main`).
+- GitHub Actions workflow `.github/workflows/deploy.yml` builds and publishes to Pages.
+- Enable Pages: Repo Settings → Pages → Build and deployment → Source: GitHub Actions.
+- Your site will be at `https://<user>.github.io/<repo>/`.
+
+Notes on hosting
+- Vite `base` is set from `BASE_PATH`. The workflow sets it to `/<repo>/` so assets resolve correctly on Pages.
+- WebGPU does not require COOP/COEP. If you later use WASM multithreading, GitHub Pages cannot set COOP/COEP headers.
+
 Notes
 - First load downloads model artifacts (hundreds of MB). They are cached for subsequent runs.
 - Model menu defaults to tiny options (1–2B params) for smoother UX. Larger models may be slow or fail on low‑VRAM GPUs.
@@ -23,4 +33,3 @@ Project Structure
 - `src/ui/model/models.ts`: Model presets. Adjust as needed.
 - `src/ui/chat/*`: Chat state and UI.
 - `src/utils/useIndexedDB.ts`: Minimal IndexedDB helper used to persist chats per model.
-
