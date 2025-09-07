@@ -19,6 +19,12 @@ export const ChatPanel: FC<{ messages: ChatMessage[]; streaming?: boolean }>
           </div>
         </div>
       ))}
+      {streaming && (messages.length === 0 || messages[messages.length - 1]?.role !== 'assistant') && (
+        <div className="msg">
+          <div className="avatar">A</div>
+          <div className="bubble">Thinking<span className="dots"/></div>
+        </div>
+      )}
       {messages.length === 0 && (
         <div className="muted">Start a conversation by asking a question.</div>
       )}
@@ -29,4 +35,3 @@ export const ChatPanel: FC<{ messages: ChatMessage[]; streaming?: boolean }>
 function Blink() {
   return <span style={{opacity:.6}}>|</span>;
 }
-

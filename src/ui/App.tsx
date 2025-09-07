@@ -104,6 +104,12 @@ export default function App() {
         </aside>
 
         <section className="content">
+          {engine.streaming && (
+            <div className="thinking-pill" aria-live="polite">
+              <span className="spinner" />
+              <span>Assistant is thinking</span>
+            </div>
+          )}
           <div className="chat">
             <ChatPanel
               messages={chat.items}
@@ -143,7 +149,7 @@ export default function App() {
               autoComplete="off"
             />
             <button className="btn" disabled={engine.state !== 'ready' || engine.streaming}>
-              Send
+              {engine.streaming ? <><span className="spinner"/> Thinking…</> : 'Send'}
             </button>
           </form>
         </section>

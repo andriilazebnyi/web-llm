@@ -138,6 +138,16 @@ body {
 }
 .btn:disabled { opacity: .6; cursor: not-allowed; }
 
+.spinner {
+  width: 14px; height: 14px;
+  border: 2px solid color-mix(in oklab, var(--text), transparent 70%);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
 .select, .progress {
   width: 100%;
   background: var(--panel-2);
@@ -159,6 +169,28 @@ body {
 }
 
 .stat { font-variant-numeric: tabular-nums; }
+
+.thinking-pill {
+  align-self: start;
+  margin: 6px 16px 0 16px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 6px 10px; border-radius: 999px;
+  font-size: 12px;
+}
+
+.dots::after {
+  content: '…';
+  animation: blinkdots 1.4s steps(3, end) infinite;
+}
+@keyframes blinkdots {
+  0% { content: ''; }
+  33% { content: '.'; }
+  66% { content: '..'; }
+  100% { content: '...'; }
+}
 
 @media (max-width: 900px) {
   .container { grid-template-columns: 1fr; }
