@@ -49,6 +49,8 @@ body {
   grid-template-columns: 280px 1fr;
   gap: 12px;
   padding: 12px;
+  min-height: 0; /* allow children to size within viewport */
+  overflow: hidden; /* prevent page scroll; only chat scrolls */
 }
 
 .sidebar {
@@ -59,6 +61,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-height: 0;
+  overflow: auto; /* independent scroll if needed */
 }
 
 .content {
@@ -67,12 +71,14 @@ body {
   border-radius: 12px;
   display: grid;
   grid-template-rows: 1fr auto;
-  overflow: hidden;
+  overflow: hidden; /* keep input visible; chat scrolls */
+  min-height: 0; /* enable child scroll */
 }
 
 .chat {
   padding: 16px;
-  overflow: auto;
+  overflow: auto; /* only this area scrolls */
+  min-height: 0;
 }
 
 .msg {

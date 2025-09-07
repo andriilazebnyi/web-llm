@@ -75,6 +75,15 @@ export default function App() {
                   <div className="stat">{engine.progress.pct}%</div>
                 </div>
                 <progress className="progress" max={100} value={engine.progress.pct} />
+                <div className="col" style={{ marginTop: 8 }}>
+                  <div className="muted">Artifacts</div>
+                  {engine.progress.artifacts.map(a => (
+                    <div key={a.label} className="row" style={{ justifyContent: 'space-between' }}>
+                      <span className="muted" title={a.label}>{a.label}</span>
+                      <span className="kbd">{a.status}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
