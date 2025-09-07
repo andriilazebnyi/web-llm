@@ -18,7 +18,7 @@ export function useWebGPU(): WebGPUInfo {
     }
     (async () => {
       try {
-        const adapter: GPUAdapter | null = await (navigator as any).gpu.requestAdapter();
+        const adapter = await (navigator as any).gpu.requestAdapter();
         if (!adapter) {
           setInfo({ supported: false, adapter: '', features: [], error: 'No compatible adapter' });
           return;
@@ -34,4 +34,3 @@ export function useWebGPU(): WebGPUInfo {
 
   return info;
 }
-
