@@ -44,6 +44,17 @@ body {
 .muted { color: var(--muted); }
 .brand::after { content: ' • v0.1'; color: var(--muted); font-weight: 400; margin-left: 6px; }
 
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 8px; border-radius: 999px; font-size: 12px;
+  background: var(--panel-2); border: 1px solid var(--border);
+}
+.badge.ok { color: var(--ok); }
+.badge.warn { color: var(--danger); }
+.dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot.ok { background: var(--ok); }
+.dot.warn { background: var(--danger); }
+
 .container {
   display: grid;
   grid-template-columns: 280px 1fr;

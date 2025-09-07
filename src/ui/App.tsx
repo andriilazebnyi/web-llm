@@ -3,9 +3,11 @@ import { useChatStore } from '../ui/chat/useChatStore';
 import { ChatPanel } from '../ui/chat/ChatPanel';
 import { useEngine } from '../ui/model/useEngine';
 import { usePrebuiltModels } from '../ui/model/usePrebuiltModels';
+import { useWebGPU } from '../ui/model/useWebGPU';
 
 export default function App() {
   const modelList = usePrebuiltModels();
+  const webgpu = useWebGPU();
   const [selectedModel, setSelectedModel] = useState<string>(modelList[0]?.id || '');
   const engine = useEngine();
   const chat = useChatStore(selectedModel);
@@ -28,9 +30,13 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <div className="row">
+        <div className="row" style={{ gap: 12 }}>
           <div className="brand">Web LLM Starter</div>
-          <div className="muted">React + WebGPU</div>
+          <div className={`badge ${webgpu.supported ? 'ok' : 'warn'}`} title={webgpu.supported ? `Adapter: ${webgpu.adapter}` : (webgpu.error || 'WebGPU unsupported')}>
+            <span className={`dot ${webgpu.supported ? 'ok' : 'warn'}`} />
+            WebGPU {webgpu.supported ? 'On' : 'Off'}
+          </div>
+          {webgpu.supported && <div className="muted" title={webgpu.features.join(', ') || undefined}>{webgpu.adapter}</div>}
         </div>
         <div className="row">
           <span className="muted">Tok/s</span>
@@ -54,6 +60,11 @@ export default function App() {
                 <option key={m.id} value={m.id}>{m.label}</option>
               ))}
             </select>
+            {!webgpu.supported && (
+              <div className="muted" style={{ fontSize: 12 }}>
+                WebGPU not detected. You can still try, but performance may be limited.
+              </div>
+            )}
 
             {engine.state !== 'ready' ? (
               <button
