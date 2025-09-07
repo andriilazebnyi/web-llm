@@ -38,17 +38,21 @@ export function useEngine() {
               const currentActive = activeArtifactRef.current;
               if (currentActive && currentActive !== label) {
                 const j = artifacts.findIndex(a => a.label === currentActive);
-                if (j >= 0 && artifacts[j].status !== 'done') artifacts[j] = { ...artifacts[j], status: 'downloading' };
+                if (j >= 0) {
+                  const cur = artifacts[j]!;
+                  if (cur.status !== 'done') artifacts[j] = { label: cur.label, status: 'downloading' };
+                }
               }
               if (idx === -1) {
                 artifacts.push({ label, status: 'downloading' });
-              } else if (artifacts[idx].status === 'pending') {
-                artifacts[idx] = { ...artifacts[idx], status: 'downloading' };
+              } else {
+                const cur = artifacts[idx]!;
+                if (cur.status === 'pending') artifacts[idx] = { label: cur.label, status: 'downloading' };
               }
               activeArtifactRef.current = label;
             }
             if (pct >= 100) {
-              artifacts = artifacts.map(a => ({ ...a, status: 'done' }));
+              artifacts = artifacts.map(a => ({ label: a.label, status: 'done' }));
               activeArtifactRef.current = null;
             }
             return { pct, phase, artifacts };
@@ -67,7 +71,7 @@ export function useEngine() {
   const unload = useCallback(() => {
     engineRef.current = null;
     setState('idle');
-    setProgress({ pct: 0, phase: '' });
+    setProgress({ pct: 0, phase: '', artifacts: [] });
   }, []);
 
   const clearCaches = useCallback(async () => {

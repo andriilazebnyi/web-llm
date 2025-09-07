@@ -12,7 +12,7 @@ export default function App() {
 
   useEffect(() => {
     if (!selectedModel && modelList.length > 0) {
-      setSelectedModel(modelList[0].id);
+      setSelectedModel(modelList[0]?.id ?? '');
     }
   }, [modelList, selectedModel]);
 
